@@ -1,41 +1,80 @@
-import {Component,Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Component,  ViewEncapsulation} from '@angular/core';
+import {ProductService} from '../../services/product.service';
+import {OrderService} from '../../services/order.service';
 
 @Component({
   selector: 'new',
-  template: `<google-chart [(data)]="pieChartOptions"></google-chart>`
+  encapsulation: ViewEncapsulation.None,
+  providers: [ProductService,OrderService],
+  template: require('./new.html')
 })
-@Injectable()
+
 export class NewComponent {
-  private urlService = 'http://localhost:8080/Onwine-BigData/';
-  public pieChartOptions =  {
-    chartType: 'PieChart',
-    dataTable: /*[
-        ['Task', 'Hours per Day'],
-        ['Work',     11],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    7]
-    ]*/[],
-    options: {'title':'Répartition des types de vin provisionnés',
-        			is3D:true,
-              slices:{0:{color: 'green'}, 1:{color: 'pink'}, 2:{color: 'yellow'}, 3:{color: 'red'}},
-                       'backgroundColor': 'transparent',
-                       'width':600,
-                       'height':300},
-    };
-    constructor(private http: Http) {
-      this.getProductTypesChartData();
+    private productsTypesChartOptions =  {
+      chartType: 'PieChart',
+      dataTable: [],
+      options: {is3D:true,
+                slices:{0:{color: 'green'}, 1:{color: 'pink'}, 2:{color: 'yellow'}, 3:{color: 'red'}},
+                backgroundColor: 'transparent'}
     };
 
-   private getProductTypesChartData() {
-        return this.http.get(this.urlService+'products/typesChartData')
-                        .map(response => response.json())
-                        .subscribe(
-                          people => this.pieChartOptions.dataTable = people,
-                          () => console.log('Completed!')
-                        );
-					
-   }
+    private ordersTypesChartOptions =  {
+      chartType: 'PieChart',
+      dataTable: [],
+      options: {pieHole:0.4,
+                slices:{0:{color: 'green'}, 1:{color: 'pink'}, 2:{color: 'yellow'}, 3:{color: 'red'}},
+                backgroundColor: 'transparent'}
+    };
+
+    private ordersCountriesChartOptions =  {
+      chartType: 'GeoChart',
+      dataTable: [],
+      options: {backgroundColor: 'transparent'}
+    };
+
+    private ordersCurrenciesChartOptions = {
+      chartType: 'BarChart',
+      dataTable: [],
+      options: {backgroundColor: 'transparent'}
+    };
+
+    private ordersTopProductsChartOptions = {
+      chartType: 'ColumnChart',
+      dataTable: [],
+      options: {is3D:true,
+                backgroundColor: 'transparent'}
+    };
+
+    constructor(productService: ProductService, orderService:OrderService) {
+      productService.getProductTypesChartData()
+                .subscribe(
+                  types => this.productsTypesChartOptions.dataTable = types,
+                  err => console.error('Error: ' + err),
+                  () => console.log('Completed!')
+                );
+      orderService.getOrderTypesChartData()
+                .subscribe(
+                  types => this.ordersTypesChartOptions.dataTable = types,
+                  err => console.error('Error: ' + err),
+                  () => console.log('Completed!')
+                );
+      orderService.getOrderCountriesChartData()
+                .subscribe(
+                  countries => this.ordersCountriesChartOptions.dataTable = countries,
+                  err => console.error('Error: ' + err),
+                  () => console.log('Completed!')
+                );
+      orderService.getOrderCurrenciesChartData()
+                .subscribe(
+                  currencies => this.ordersCurrenciesChartOptions.dataTable = currencies,
+                  err => console.error('Error: ' + err),
+                  () => console.log('Completed!')
+                );
+      orderService.getOrderTopProductsChartData()
+                .subscribe(
+                  topProducts => this.ordersTopProductsChartOptions.dataTable = topProducts,
+                  err => console.error('Error: ' + err),
+                  () => console.log('Completed!')
+                );
+    }
 }
