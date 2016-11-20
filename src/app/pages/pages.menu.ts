@@ -3,30 +3,18 @@ export const PAGES_MENU = [
     path: 'pages',
     children: [
       {
-        path: 'new',  // path for our page
-        data: { // custom menu declaration
+        path: 'dashboard',
+        data: {
           menu: {
-            title: 'New Page', // menu title
-            icon: 'ion-android-home', // menu icon
+            title: 'Dashboard',
+            icon: 'ion-android-home',
             pathMatch: 'prefix', // use it if item children not displayed in menu
             selected: false,
             expanded: false,
             order: 0
           }
         }
-      },
-      {
-        path: 'dashboard',
-        data: {
-          menu: {
-            title: 'Dashboard',
-            icon: 'ion-android-home',
-            selected: false,
-            expanded: false,
-            order: 0
-          }
-        }
-      },
+      }/*,
       {
         path: 'editors',
         data: {
@@ -325,13 +313,13 @@ export const PAGES_MENU = [
             ]
           }
         ]
-      },
+      }*/,
       {
         path: '',
         data: {
           menu: {
-            title: 'External Link',
-            url: 'http://akveo.com',
+            title: 'Accéder au site',
+            url: 'http://localhost:8080/Wine-Web/',
             icon: 'ion-android-exit',
             order: 800,
             target: '_blank'
