@@ -16,7 +16,7 @@ export class OrderBarChart {
     private ordersCurrenciesChartOptions = {
       chartType: 'BarChart',
       dataTable: [],
-      options: {backgroundColor: 'transparent'}
+      options: {backgroundColor: 'transparent', height: '260'}
     };
 
     constructor(private orderService:OrderService, 

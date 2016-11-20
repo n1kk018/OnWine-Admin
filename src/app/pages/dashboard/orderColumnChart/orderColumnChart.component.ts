@@ -17,7 +17,7 @@ export class OrderColumnChart {
       chartType: 'ColumnChart',
       dataTable: [],
       options: {is3D:true,
-                backgroundColor: 'transparent'}
+                backgroundColor: 'transparent', height: '260'}
     };
 
     constructor(private orderService:OrderService, 

@@ -14,6 +14,7 @@ export class ProductPieChart {
       chartType: 'PieChart',
       dataTable: [],
       options: {is3D:true,
+                height: '220',
                 slices:{0:{color: 'green'}, 1:{color: 'pink'}, 2:{color: 'yellow'}, 3:{color: 'red'}},
                 backgroundColor: 'transparent'}
     };

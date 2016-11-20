@@ -319,7 +319,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Accéder au site',
-            url: 'http://localhost:8080/Wine-Web/',
+            url: 'http://localhost:8181/Wine-Web/',
             icon: 'ion-android-exit',
             order: 800,
             target: '_blank'

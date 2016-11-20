@@ -16,6 +16,7 @@ export class OrderPieChart {
       chartType: 'PieChart',
       dataTable: [],
       options: {pieHole:0.4,
+                height: '220',
                 slices:{0:{color: 'green'}, 1:{color: 'pink'}, 2:{color: 'yellow'}, 3:{color: 'red'}},
                 backgroundColor: 'transparent'}
     };
