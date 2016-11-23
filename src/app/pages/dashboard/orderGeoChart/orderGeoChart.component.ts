@@ -1,12 +1,9 @@
-import {Component,  ViewEncapsulation, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
+import {Component,  ViewEncapsulation} from '@angular/core';
 import {OrderService} from '../../../services/order.service';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-
 
 @Component({
   selector: 'order-geo-chart',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [OrderService],
   template: require('./orderGeoChart.html')
 })
@@ -18,14 +15,15 @@ export class OrderGeoChart {
       options: {backgroundColor: 'transparent'}
     };
 
-    constructor(private orderService:OrderService, 
-                private cd: ChangeDetectorRef) {
-        IntervalObservable.create(60000).flatMap(() => {return this.orderService.getOrderCountriesChartData()})
-                .subscribe(
-                        countries => this.ordersCountriesChartOptions.dataTable = countries,
-                        err => console.error('Error: ' + err),
-                        () => this.cd.markForCheck()
-                );
+    constructor(private orderService:OrderService) {
+        setInterval(() => {
+                this.ordersCountriesChartOptions = Object.create(this.ordersCountriesChartOptions);
+                this.orderService.getOrderCountriesChartData()
+                        .subscribe(
+                                countries => this.ordersCountriesChartOptions.dataTable = countries,
+                                err => console.error('Error: ' + err)
+                        );
+        }, 10000);
     }
 
     public ngOnInit() {

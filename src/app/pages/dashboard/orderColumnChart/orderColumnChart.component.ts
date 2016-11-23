@@ -1,18 +1,14 @@
-import {Component,  ViewEncapsulation, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
+import {Component,  ViewEncapsulation} from '@angular/core';
 import {OrderService} from '../../../services/order.service';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-
 
 @Component({
   selector: 'order-col-chart',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [OrderService],
   template: require('./orderColumnChart.html')
 })
 
 export class OrderColumnChart {
-    private chartData:Object;
     private ordersTopProductsChartOptions = {
       chartType: 'ColumnChart',
       dataTable: [],
@@ -20,22 +16,22 @@ export class OrderColumnChart {
                 backgroundColor: 'transparent', height: '260'}
     };
 
-    constructor(private orderService:OrderService, 
-                private cd: ChangeDetectorRef) {
-        IntervalObservable.create(7000).flatMap(() => {return this.orderService.getOrderTopProductsChartData()})
-                .subscribe(
-                        topProducts => this.ordersTopProductsChartOptions.dataTable = this.chartData = topProducts,
-                        err => console.error('Error: ' + err),
-                        () => this.cd.markForCheck()
-                );
+    constructor(private orderService:OrderService) {
+        setInterval(() => {
+                this.ordersTopProductsChartOptions = Object.create(this.ordersTopProductsChartOptions);
+                this.orderService.getOrderTopProductsChartData()
+                        .subscribe(
+                                topProducts => this.ordersTopProductsChartOptions.dataTable = topProducts,
+                                err => console.error('Error: ' + err)
+                        );
+        }, 4000);
     }
 
     public ngOnInit() {
       this.orderService.getOrderTopProductsChartData()
                 .subscribe(
                   topProducts => this.ordersTopProductsChartOptions.dataTable = topProducts,
-                  err => console.error('Error: ' + err),
-                  () => this.cd.markForCheck()
+                  err => console.error('Error: ' + err)
                 );
     }
 }
