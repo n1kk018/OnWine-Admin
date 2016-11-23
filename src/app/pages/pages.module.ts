@@ -6,9 +6,15 @@ import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
 
+import { UserService } from '../services/user.service';
+import { LoggedInGuard } from './logged-in.guard'
+
 @NgModule({
   imports: [CommonModule, NgaModule, routing],
   declarations: [Pages]
+  providers: [
+    UserService, LoggedInGuard
+  ]
 })
 export class PagesModule {
 }

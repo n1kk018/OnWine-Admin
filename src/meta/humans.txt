@@ -3,12 +3,12 @@
 
 # TEAM
 
-  akveo.com
+ OnWine
 
 # THANKS
 
   <name>
-  Akveo Team
+ OnWine Team
 
 # TECHNOLOGY COLOPHON
 
