@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'login',
@@ -27,8 +28,11 @@ export class Login {
   public onSubmit(values:Object):void {
     this.submitted = true;
     if (this.form.valid) {
-      // your code goes here
-      // console.log(values);
+      this.userService.login(email, password).subscribe((result) => {
+        if (result) {
+          this.router.navigate(['']);
+        }
+      });
     }
   }
 }
