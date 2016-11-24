@@ -11,7 +11,7 @@ import { LoggedInGuard } from './logged-in.guard'
 
 @NgModule({
   imports: [CommonModule, NgaModule, routing],
-  declarations: [Pages]
+  declarations: [Pages],
   providers: [
     UserService, LoggedInGuard
   ]
