@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class OrderService {
-    private urlService = 'http://localhost:8080/Onwine-BigData/';
+    private urlService = 'http://192.168.0.10:8080/Onwine-BigData/';
     constructor(private http: Http) {}
 
     public getOrderTypesChartData() {
